@@ -32,11 +32,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
-
-    void Start()
-    {
-    }
-
+    
     void Update()
     {
         if (isJumping && !IsGrounded())
