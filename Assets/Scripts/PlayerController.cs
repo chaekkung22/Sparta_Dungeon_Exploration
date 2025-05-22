@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +20,10 @@ public class PlayerController : MonoBehaviour
     private float camCurXRotation;
     private Animator animator;
 
+    private bool isJumping;
+    private float jumpStartTime;
+    [SerializeField] private float jumpAnimLength = 1.53f;
+
     public Action inventory;
     private Rigidbody _rigidbody;
 
@@ -34,6 +36,24 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         
+    }
+
+    void Update()
+    {
+        if (isJumping && !IsGrounded())
+        {
+            float jumpDuration = Time.time - jumpStartTime;
+            float calculatedSpeed = jumpAnimLength / jumpDuration;
+            animator.speed = Mathf.Clamp(calculatedSpeed, 0.3f, 2f);
+            isJumping = false;
+
+            Invoke("ResetAnimatorSpeed", 0.1f);
+        }
+    }
+
+    void ResetAnimatorSpeed()
+    {
+        animator.speed = 1f;
     }
 
     void FixedUpdate()
@@ -73,15 +93,48 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Performed)
         {
             currentMovementInput = context.ReadValue<Vector2>();
+            animator.SetBool("IsWalk", true);
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             currentMovementInput = Vector2.zero;
+            animator.SetBool("IsWalk", false);
         }
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
         mouseDelta = context.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && IsGrounded())
+        {
+            _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+            animator.SetTrigger("Jump");
+            jumpStartTime = Time.time;
+            isJumping = true;
+        }
+    }
+
+    private bool IsGrounded()
+    {
+        Ray[] rays = new Ray[4]
+        {
+            new Ray(transform.position + (transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
+            new Ray(transform.position + (-transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
+            new Ray(transform.position + (transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
+            new Ray(transform.position + (-transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down)
+        };
+
+        for (int i = 0; i < rays.Length; i++)
+        {
+            if (Physics.Raycast(rays[i], 0.15f, groundLayer))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
