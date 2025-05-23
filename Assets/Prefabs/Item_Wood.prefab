@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 5429269024026051269}
   - component: {fileID: 7350092799554959895}
   - component: {fileID: 7056189958773110131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Log
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5429269024026051269
 Transform:
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6112078059752966302}
   - component: {fileID: 67734375257131521}
   - component: {fileID: 8640503339480798809}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Item_Wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}

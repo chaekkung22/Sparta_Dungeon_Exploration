@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: "\uB2F9\uADFC"
   description: "\uBAB8\uC5D0 \uC88B\uACE0 \uB9DB\uB3C4 \uC88B\uC740 \uB2F9\uADFC.
-    \uCCB4\uB825\uC744 \uD68C\uBCF5\uD574\uC900\uB2E4."
+    \uCCB4\uB825\uACFC \uC2A4\uD0DC\uBBF8\uB098\uB97C \uD68C\uBCF5\uD574\uC900\uB2E4."
   type: 1
   icon: {fileID: 21300000, guid: b53822ec75d701e49b9947d1d09fd81e, type: 3}
   dropPrefab: {fileID: 3516209031571639544, guid: b8612cc38b0f96a4eae1fa62aa929228, type: 3}
@@ -22,5 +22,7 @@ MonoBehaviour:
   maxStackAmount: 12
   consumables:
   - type: 0
+    value: 20
+  - type: 1
     value: 10
   equipPrefab: {fileID: 0}

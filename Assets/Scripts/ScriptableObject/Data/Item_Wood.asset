@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Item_Wood
   m_EditorClassIdentifier: 
   displayName: "\uB098\uBB34\uC870\uAC01"
-  description: "\uB098\uBB34\uC5D0\uC11C \uCC44\uCDE8\uD560 \uC218 \uC788\uB294 \uB098\uBB34\uC870\uAC01\uC785\uB2C8\uB2E4."
+  description: "\uB098\uBB34\uC5D0\uC11C \uCC44\uCDE8\uD560 \uC218 \uC788\uB294 \uB098\uBB34\uC870\uAC01."
   type: 2
   icon: {fileID: 21300000, guid: a5612e17f7779374da8564e7a11d823c, type: 3}
   dropPrefab: {fileID: 434335776542631189, guid: 891cee2231c77f14db92d286bfa5d47d, type: 3}
-  canStack: 0
-  maxStackAmount: 0
+  canStack: 1
+  maxStackAmount: 12
   consumables: []
   equipPrefab: {fileID: 0}
