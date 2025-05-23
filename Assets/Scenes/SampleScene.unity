@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curValue: 0
-  startValue: 80
+  startValue: 100
   maxValue: 100
   passiveValue: 5
   uiBar: {fileID: 1783946002}
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curValue: 0
-  startValue: 80
+  startValue: 100
   maxValue: 100
   passiveValue: 1
   uiBar: {fileID: 793461723}
@@ -1034,6 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   condition: {fileID: 0}
+  itemData: {fileID: 0}
 --- !u!114 &1701870347
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,14 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCondition : MonoBehaviour
+public interface IDamageable
+{
+    void TakePhysicalDamage(int damage);
+}
+
+public class PlayerCondition : MonoBehaviour ,IDamageable
 {
     public UICondition uiCondition;
     
     Condition health { get { return uiCondition.health; } }
     Condition stamina { get { return uiCondition.stamina; } }
 
+    public event Action onTakeDamage;
     void Update()
     {
         stamina.Add(stamina.passiveValue * Time.deltaTime);
@@ -28,6 +35,7 @@ public class PlayerCondition : MonoBehaviour
     public void TakePhysicalDamage(int damage)
     {
         health.Subtract(damage);
+        onTakeDamage?.Invoke();
     }
 
     public bool UseStamina(float amount)
