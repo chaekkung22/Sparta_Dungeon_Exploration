@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask groundLayer;
     private Vector2 currentMovementInput;
+    private float defaultSpeed;
 
     [Header("Look")] [SerializeField] private Transform cameraContainer;
     [SerializeField] private float minXLook;
@@ -36,8 +37,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        defaultSpeed = speed;
     }
-    
+
     void Update()
     {
         if (isJumping && !IsGrounded())
@@ -111,10 +113,13 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started && IsGrounded())
         {
-            _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
-            animator.SetTrigger("Jump");
-            jumpStartTime = Time.time;
-            isJumping = true;
+            if (CharacterManager.Instance.Player.condition.UseStamina(20))
+            {
+                _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+                animator.SetTrigger("Jump");
+                jumpStartTime = Time.time;
+                isJumping = true;
+            }
         }
     }
 
@@ -123,16 +128,20 @@ public class PlayerController : MonoBehaviour
         Ray[] rays = new Ray[4]
         {
             new Ray(
-                transform.TransformPoint(capsuleCollider.center) - new Vector3(0, capsuleCollider.center.y, 0) + (transform.forward * 0.2f) +
+                transform.TransformPoint(capsuleCollider.center) - new Vector3(0, capsuleCollider.center.y, 0) +
+                (transform.forward * 0.2f) +
                 (transform.up * 0.01f), Vector3.down),
             new Ray(
-                transform.TransformPoint(capsuleCollider.center) - new Vector3(0, capsuleCollider.center.y, 0) + (-transform.forward * 0.2f) +
+                transform.TransformPoint(capsuleCollider.center) - new Vector3(0, capsuleCollider.center.y, 0) +
+                (-transform.forward * 0.2f) +
                 (transform.up * 0.01f), Vector3.down),
             new Ray(
-                transform.TransformPoint(capsuleCollider.center) - new Vector3(0, capsuleCollider.center.y, 0) + (transform.right * 0.2f) +
+                transform.TransformPoint(capsuleCollider.center) - new Vector3(0, capsuleCollider.center.y, 0) +
+                (transform.right * 0.2f) +
                 (transform.up * 0.01f), Vector3.down),
             new Ray(
-                transform.TransformPoint(capsuleCollider.center) - new Vector3(0, capsuleCollider.center.y, 0) + (-transform.right * 0.2f) +
+                transform.TransformPoint(capsuleCollider.center) - new Vector3(0, capsuleCollider.center.y, 0) +
+                (-transform.right * 0.2f) +
                 (transform.up * 0.01f), Vector3.down)
         };
 
@@ -161,5 +170,16 @@ public class PlayerController : MonoBehaviour
         bool toggle = Cursor.lockState == CursorLockMode.Locked;
         Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
         canLook = !toggle;
+    }
+
+    public void ChangeSpeed(float amount)
+    {
+        speed *= amount;
+        Invoke("ResetSpeed", 3f);
+    }
+
+    void ResetSpeed()
+    {
+        speed = defaultSpeed;
     }
 }

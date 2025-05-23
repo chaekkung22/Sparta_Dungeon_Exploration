@@ -27,6 +27,16 @@ public class PlayerCondition : MonoBehaviour ,IDamageable
         }
     }
 
+    public void Heal(float amount)
+    {
+        health.Add(amount);
+    }
+
+    public void HealStamina(float amount)
+    {
+        stamina.Add(amount);
+    }
+
     public void Die()
     {
         Debug.Log("die");
